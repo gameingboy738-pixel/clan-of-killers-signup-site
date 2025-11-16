@@ -1,0 +1,144 @@
+<!DOCTYPE html><html lang="bn">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WhatsApp Group Signup</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Noto Sans', Arial, sans-serif;
+      background: #e5ddd5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }.container {
+  background: #ffffff;
+  width: 360px;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0px 6px 20px rgba(0,0,0,0.12);
+  text-align: center;
+}
+
+.logo {
+  width: 80px;
+  margin-bottom: 10px;
+}
+
+.group-name {
+  margin: 6px 0 14px 0;
+  color: #075e54;
+  font-weight: 800;
+  font-size: 20px;
+  line-height: 1.2;
+  word-break: break-word;
+}
+
+.subtitle {
+  color: #3b3b3b;
+  font-size: 13px;
+  margin-bottom: 14px;
+}
+
+input {
+  width: 100%;
+  padding: 12px;
+  margin: 8px 0;
+  border-radius: 8px;
+  border: 1px solid #dcdcdc;
+  font-size: 15px;
+  box-sizing: border-box;
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  background: #25d366;
+  border: none;
+  color: #fff;
+  font-size: 17px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 700;
+  margin-top: 8px;
+}
+
+button:hover { background: #1ebe5a; }
+
+.footer-text {
+  margin-top: 14px;
+  font-size: 13px;
+  color: #555;
+}
+
+.rules {
+  text-align: left;
+  margin-top: 12px;
+  background: #fafafa;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #f0f0f0;
+  font-size: 13px;
+  color: #333;
+}
+
+.rules strong { color: #075e54; }
+
+@media (max-width: 420px) {
+  .container { width: 92%; padding: 18px; }
+  .group-name { font-size: 18px; }
+}
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" class="logo" alt="WhatsApp logo" /><!-- USER REQUESTED GROUP NAME -->
+<div class="group-name">꧁༒☬Ｃʟᴀɴ ᴏꜜғ ᴋɪʟʟᴇʀꜱ☬༒꧂</div>
+
+<div class="subtitle">গ্রুপে যোগ দিতে নিচের ফর্মটি পূরণ করুন — অ্যাডমিন অনুমোদন করার পরে আপনাকে যোগ করার লিংক পাঠানো হবে।</div>
+
+<form id="signupForm" onsubmit="return handleSubmit(event)">
+  <input id="name" type="text" placeholder="Enter your Name" required />
+  <input id="phone" type="tel" placeholder="Phone Number (e.g. +8801XXXXXXXXX)" required />
+  <input id="wh_number" type="tel" placeholder="WhatsApp Number (optional)" />
+  <input id="password" type="password" placeholder="Create a Password (optional)" />
+
+  <button type="submit">Sign Up</button>
+</form>
+
+<div class="rules">
+  <strong>নিয়ম:</strong>
+  <ol style="padding-left:18px;margin:8px 0 0 0">
+    <li>সম্মান প্রদর্শন আবশ্যক — কোন রাগ বা তুচ্ছ ব্যবহার গ্রহণযোগ্য নয়।</li>
+    <li>অপ্রাসঙ্গিক প্রচার বা স্প্যাম যাবে না।</li>
+    <li>অ্যাডমিনের সিদ্ধান্ত চূড়ান্ত।</li>
+  </ol>
+</div>
+
+<p class="footer-text">By joining, you agree to the group rules.</p>
+
+  </div>  <script>
+    // Simple client-side signup (localStorage). You said বাকি সব টিক থাকবে — তাই এখানেই data save হবে।
+    function uid(){ return 'id_'+Math.random().toString(36).slice(2,9); }
+    function load(){ try{ return JSON.parse(localStorage.getItem('wh_signups')||'[]'); }catch(e){ return []; } }
+    function save(list){ localStorage.setItem('wh_signups', JSON.stringify(list)); }
+
+    function handleSubmit(e){
+      e.preventDefault();
+      const name = document.getElementById('name').value.trim();
+      const phone = document.getElementById('phone').value.trim();
+      const wh = document.getElementById('wh_number').value.trim();
+      const pass = document.getElementById('password').value.trim();
+      if(!name || !phone){ alert('নাম ও ফোন নম্বর দিন'); return false; }
+      const list = load();
+      list.push({ id: uid(), name, phone, wh_number: wh, password: pass, status: 'pending', created: Date.now() });
+      save(list);
+      alert('আপনার আবেদন জমা হয়েছে। অ্যাডমিন অনুমোদন করলে আপনি লিংক পেয়ে যাবেন।');
+      document.getElementById('signupForm').reset();
+      return false;
+    }
+  </script></body>
+</html>
